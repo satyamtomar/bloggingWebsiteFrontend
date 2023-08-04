@@ -1,33 +1,33 @@
 import React from 'react'
-import BlogTypeCarousel from './BlogTypeCarousel';
+// import BlogTypeCarousel from './BlogTypeCarousel';
 import BlogTypesCarousel from './BlogTypeCarousel';
+import {toast,ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Home = () => {
-    const
-        blogList = [
-            {}
-        ]
-
-        const blogCategories = [
-            {name: "Tech", image: "/path/to/image.jpg"},
-            {name: "Sports", image: "/path/to/image.jpg"},
-            // Add more categories as needed
-          ];
+      
+  function handleTypeClick(type)
+  {
+    toast(type,'clicked');
+  }
         
     return (
 
         <>
+        <ToastContainer
+        theme='dark'/>
             <div className='container'>
    <div className='home-blog-types'>
    <BlogTypesCarousel 
     types={['tech', 'sports', 'media', 'global', 'trend','study','javascript','reactjs','freetime']} 
-    onSelectType={(type) => console.log(type)} 
+    handleTypeClick={handleTypeClick} 
+
 />
    </div>
    <div className='home-blog-type-selected'>
     Trending
    </div>
-    <div className='blog-container'>
+    <div className='blog-container' >
 
     <div className='blog-item'>
               

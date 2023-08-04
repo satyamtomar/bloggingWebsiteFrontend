@@ -21,7 +21,7 @@ function App() {
           
          <Route exact path="/login" key="Login"  element={<Login/>} />
         
-         <Route exact path="/blog" key="Blog"  element={<Blog/>} />
+          <Route exact path="/blog" key="Blog"  element={<Blog/>} />
         
          <Route exact path="/signup" key="SignUp"  element={<SignUp/>} />
         

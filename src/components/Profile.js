@@ -13,7 +13,8 @@ const Profile = () => {
         // Other posts...
     ];
     return (
-        <div className="profile-container">
+        <div className='container'>
+    <div className="profile-container">
             <div className="profile-header">
                 <img src={user.profilePicture} alt={user.name} className="profile-pic" />
                 <h2 className="profile-name">{user.name}</h2>
@@ -76,6 +77,8 @@ const Profile = () => {
                 <button type="submit">Edit Profile</button>
             </div>
         </div>
+        </div>
+    
     );
 };
 

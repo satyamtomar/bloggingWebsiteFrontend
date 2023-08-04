@@ -11,6 +11,9 @@ const Blog = () => {
 
                 </h1>
             </div>
+            <div className='blog-page-image-title'>
+                <img src='/assets/img/img1.png' className='blog-page-image'/>
+            </div>
             <div className='blog-page-related-details'>
 
                 <div className='blog-page-author-related'>
