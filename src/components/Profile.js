@@ -1,19 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
+import EditModal from './EditModal';
+import { useNavigate } from 'react-router';
 // import './Profile.css';
 
 const Profile = () => {
+    const navigate=useNavigate();
     const user = {
         name: 'John Doe',
         bio: 'A passionate blogger and a enthusiastic sports follower',
         profilePicture: '/assets/img/img1.png',  // URL to profile picture
     };
-
+   
     const posts = [
         { title: 'My first blog post', date: '2023-07-30' },
         // Other posts...
     ];
+    const [isEditModalOpen,setIsEditModalOpen]=useState(false);
+    const [profileDetails,setProfileDetails]=useState({fullName:'Satyam Tomar',email:"saitamaitachi123@gmail.com",password:'12345',dob:'10th Aug, 2001'})
+    const handleEdit=()=>
+    {
+   setIsEditModalOpen(!isEditModalOpen);
+
+    }
+
+    function handleClickPost()
+    {
+        navigate('/mypost');
+    }
     return (
         <div className='container'>
+            {
+                isEditModalOpen&&<EditModal 
+            isOpen={isEditModalOpen}
+            closeModal={()=>{setIsEditModalOpen(false);}}
+            details={profileDetails}
+            setDetails={setProfileDetails}
+           
+            />}
     <div className="profile-container">
             <div className="profile-header">
                 <img src={user.profilePicture} alt={user.name} className="profile-pic" />
@@ -58,23 +81,30 @@ const Profile = () => {
             <img src='/assets/img/img1.png' className='blog-desc-img'/>
           </div>
               </div>
-              <div className='blog-footer'>
+              <div className='blog-myposts-footer'>
                
-               <div className='blog-type'>
-                 Poetry
-               </div>
-                <div className='blog-readtime'>
-                  2min read
+               <div className='blog-type-read'>
+                 <span className='blog-type'>Poetry</span>
+               
+               <span>2min read</span>   
+                </div>
+
+                <div className='blog-special-insights'>
+
+                <span>1000 Likes </span>
+                <span>100 Comments </span>
+                <span>20000 Views </span>
+                    <button className='blog-edit-btn'>Edit</button>
                 </div>
               </div>
               </div>
-              
+      
    
       
 </div>
             <div className="profile-submit-button">
-                <button type="submit">Open all of my post</button>
-                <button type="submit">Edit Profile</button>
+                <button type="submit" onClick={()=>{handleClickPost()}}>Open all of my post</button>
+                <button type="submit" onClick={handleEdit}>Edit Profile</button>
             </div>
         </div>
         </div>

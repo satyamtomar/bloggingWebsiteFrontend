@@ -6,14 +6,14 @@ import 'react-toastify/dist/ReactToastify.css';
 import { TailSpin } from "react-loader-spinner";
 import InfiniteScroll from 'react-infinite-scroll-component';
 
-const Home = () => {
+const MyPosts = () => {
    const [mainLoader,setMainLoader]=useState(false);   
   function handleTypeClick(type)
   {
-    toast(type.toUpperCase());
+    toast(type,'clicked');
     setMainLoader(true);
   }
-
+        
   const [posts, setPosts] = useState([]);
   const [hasMore, setHasMore] = useState(true);
 
@@ -34,7 +34,7 @@ const Home = () => {
   useEffect(() => {
     fetchPosts();
   }, []);
-        
+
     return (
 
         <>
@@ -54,86 +54,11 @@ const Home = () => {
 />
    </div>
    <div className='home-blog-type-selected'>
-    TRENDING
+    My Posts
    </div>
     <div className='blog-container' >
 
-    <div className='blog-item'>
-              
-              
-              <div className='blog-top'>
-               <div className='blog-author-name'>   
-               <span>Satyam Tomar</span>
-               <img src='/assets/img/img2.png' className='blog-author-img'/>
-               </div>
-               <div  className='blog-creation-day'>
-                <span>2 days ago</span>
-               </div>
-              </div>
-              <div className='blog-description'>
-                <div className='blog-desc-text-div'>
-                    <div className='blog-desc-title'>Title is this</div>
-                    <div className='blog-desc-text'>
-                    dsadsfasd  afsdsad dasfs adf afds adfs adsf aaewfdasd asdtae aeaaefww aeaewg asdfsaas asdfasd asdfas asdfas adfase eaf
-              dsadsfasd  afsdsad dasfs adf afds adfs adsf aaewfdasd asdtae aeaaefww aeaewg asdfsaas asdfasd asdfas asdfas adfase eaf
-              dsadsfasd  afsdsad dasfs adf afds adfs adsf aaewfdasd asdtae aeaaefww aeaewg asdfsaas asdfasd asdfas asdfas adfase eaf
-                    </div>
-               
-                </div>
-             
-          <div className='blog-desc-img-div'>
-            <img src='/assets/img/img2.png' className='blog-desc-img'/>
-          </div>
-              </div>
-              <div className='blog-footer'>
-               
-               <div className='blog-type'>
-                 Poetry
-               </div>
-                <div className='blog-readtime'>
-                  2min read
-                </div>
-              </div>
-              </div>
-
-    <div className='blog-item'>
-              
-              
-              <div className='blog-top'>
-               <div className='blog-author-name'>   
-               <span>Satyam Tomar</span>
-               <img src='/assets/img/img3.jpg' className='blog-author-img'/>
-               </div>
-               <div  className='blog-creation-day'>
-                <span>2 days ago</span>
-               </div>
-              </div>
-              <div className='blog-description'>
-                <div className='blog-desc-text-div'>
-                    <div className='blog-desc-title'>Title is this</div>
-                    <div className='blog-desc-text'>
-                    dsadsfasd  afsdsad dasfs adf afds adfs adsf aaewfdasd asdtae aeaaefww aeaewg asdfsaas asdfasd asdfas asdfas adfase eaf
-              dsadsfasd  afsdsad dasfs adf afds adfs adsf aaewfdasd asdtae aeaaefww aeaewg asdfsaas asdfasd asdfas asdfas adfase eaf
-              dsadsfasd  afsdsad dasfs adf afds adfs adsf aaewfdasd asdtae aeaaefww aeaewg asdfsaas asdfasd asdfas asdfas adfase eaf
-                    </div>
-               
-                </div>
-             
-          <div className='blog-desc-img-div'>
-            <img src='/assets/img/img3.jpg' className='blog-desc-img'/>
-          </div>
-              </div>
-              <div className='blog-footer'>
-               
-               <div className='blog-type'>
-                 Poetry
-               </div>
-                <div className='blog-readtime'>
-                  2min read
-                </div>
-              </div>
-              </div>
-
+  
 
     <div className='blog-item'>
               
@@ -162,19 +87,25 @@ const Home = () => {
             <img src='/assets/img/img1.png' className='blog-desc-img'/>
           </div>
               </div>
-              <div className='blog-footer'>
+              <div className='blog-myposts-footer'>
                
-               <div className='blog-type'>
-                 Poetry
-               </div>
-                <div className='blog-readtime'>
-                  2min read
+               <div className='blog-type-read'>
+                 <span className='blog-type'>Poetry</span>
+               
+               <span>2min read</span>   
+                </div>
+
+                <div className='blog-special-insights'>
+
+                <span>1000 Likes </span>
+                <span>100 Comments </span>
+                <span>20000 Views </span>
+                <button className='blog-edit-btn'>Edit</button>   
                 </div>
               </div>
               </div>
 
-
-    <div className='blog-item'>
+              <div className='blog-item'>
               
               
               <div className='blog-top'>
@@ -201,13 +132,108 @@ const Home = () => {
             <img src='/assets/img/img1.png' className='blog-desc-img'/>
           </div>
               </div>
-              <div className='blog-footer'>
+              <div className='blog-myposts-footer'>
                
-               <div className='blog-type'>
-                 Poetry
+               <div className='blog-type-read'>
+                 <span className='blog-type'>Poetry</span>
+               
+               <span>2min read</span>   
+                </div>
+
+                <div className='blog-special-insights'>
+
+                <span>1000 Likes </span>
+                <span>100 Comments </span>
+                <span>20000 Views </span>
+                <button className='blog-edit-btn'>Edit</button>   
+                </div>
+              </div>
+              </div>
+              <div className='blog-item'>
+              
+              
+              <div className='blog-top'>
+               <div className='blog-author-name'>   
+               <span>Satyam Tomar</span>
+               <img src='/assets/img/img1.png' className='blog-author-img'/>
                </div>
-                <div className='blog-readtime'>
-                  2min read
+               <div  className='blog-creation-day'>
+                <span>2 days ago</span>
+               </div>
+              </div>
+              <div className='blog-description'>
+                <div className='blog-desc-text-div'>
+                    <div className='blog-desc-title'>Title is this</div>
+                    <div className='blog-desc-text'>
+                    dsadsfasd  afsdsad dasfs adf afds adfs adsf aaewfdasd asdtae aeaaefww aeaewg asdfsaas asdfasd asdfas asdfas adfase eaf
+              dsadsfasd  afsdsad dasfs adf afds adfs adsf aaewfdasd asdtae aeaaefww aeaewg asdfsaas asdfasd asdfas asdfas adfase eaf
+              dsadsfasd  afsdsad dasfs adf afds adfs adsf aaewfdasd asdtae aeaaefww aeaewg asdfsaas asdfasd asdfas asdfas adfase eaf
+                    </div>
+               
+                </div>
+             
+          <div className='blog-desc-img-div'>
+            <img src='/assets/img/img1.png' className='blog-desc-img'/>
+          </div>
+              </div>
+              <div className='blog-myposts-footer'>
+               
+               <div className='blog-type-read'>
+                 <span className='blog-type'>Poetry</span>
+               
+               <span>2min read</span>   
+                </div>
+
+                <div className='blog-special-insights'>
+
+                <span>1000 Likes </span>
+                <span>100 Comments </span>
+                <span>20000 Views </span>
+                <button className='blog-edit-btn'>Edit</button>   
+                </div>
+              </div>
+              </div>
+              <div className='blog-item'>
+              
+              
+              <div className='blog-top'>
+               <div className='blog-author-name'>   
+               <span>Satyam Tomar</span>
+               <img src='/assets/img/img1.png' className='blog-author-img'/>
+               </div>
+               <div  className='blog-creation-day'>
+                <span>2 days ago</span>
+               </div>
+              </div>
+              <div className='blog-description'>
+                <div className='blog-desc-text-div'>
+                    <div className='blog-desc-title'>Title is this</div>
+                    <div className='blog-desc-text'>
+                    dsadsfasd  afsdsad dasfs adf afds adfs adsf aaewfdasd asdtae aeaaefww aeaewg asdfsaas asdfasd asdfas asdfas adfase eaf
+              dsadsfasd  afsdsad dasfs adf afds adfs adsf aaewfdasd asdtae aeaaefww aeaewg asdfsaas asdfasd asdfas asdfas adfase eaf
+              dsadsfasd  afsdsad dasfs adf afds adfs adsf aaewfdasd asdtae aeaaefww aeaewg asdfsaas asdfasd asdfas asdfas adfase eaf
+                    </div>
+               
+                </div>
+             
+          <div className='blog-desc-img-div'>
+            <img src='/assets/img/img1.png' className='blog-desc-img'/>
+          </div>
+              </div>
+              <div className='blog-myposts-footer'>
+               
+               <div className='blog-type-read'>
+                 <span className='blog-type'>Poetry</span>
+               
+               <span>2min read</span>   
+                </div>
+
+                <div className='blog-special-insights'>
+
+                <span>1000 Likes </span>
+                <span>100 Comments </span>
+                <span>20000 Views </span>
+                <button className='blog-edit-btn'>Edit</button>   
                 </div>
               </div>
               </div>
@@ -224,53 +250,57 @@ const Home = () => {
           </p>
         }
       >
-{posts.map((post, index) => 
-    {
-      return(
-
-        <div className='blog-item'>
+{posts.map((post)=>{
+    return(
+<div className='blog-item'>
               
               
-        <div className='blog-top'>
-         <div className='blog-author-name'>   
-         <span>Satyam Tomar</span>
-         <img src='/assets/img/img2.png' className='blog-author-img'/>
-         </div>
-         <div  className='blog-creation-day'>
-          <span>2 days ago</span>
-         </div>
-        </div>
-        <div className='blog-description'>
-          <div className='blog-desc-text-div'>
-              <div className='blog-desc-title'>Title is this</div>
-              <div className='blog-desc-text'>
-              dsadsfasd  afsdsad dasfs adf afds adfs adsf aaewfdasd asdtae aeaaefww aeaewg asdfsaas asdfasd asdfas asdfas adfase eaf
-        dsadsfasd  afsdsad dasfs adf afds adfs adsf aaewfdasd asdtae aeaaefww aeaewg asdfsaas asdfasd asdfas asdfas adfase eaf
-        dsadsfasd  afsdsad dasfs adf afds adfs adsf aaewfdasd asdtae aeaaefww aeaewg asdfsaas asdfasd asdfas asdfas adfase eaf
+              <div className='blog-top'>
+               <div className='blog-author-name'>   
+               <span>Satyam Tomar</span>
+               <img src='/assets/img/img1.png' className='blog-author-img'/>
+               </div>
+               <div  className='blog-creation-day'>
+                <span>2 days ago</span>
+               </div>
               </div>
-         
+              <div className='blog-description'>
+                <div className='blog-desc-text-div'>
+                    <div className='blog-desc-title'>Title is this</div>
+                    <div className='blog-desc-text'>
+                    dsadsfasd  afsdsad dasfs adf afds adfs adsf aaewfdasd asdtae aeaaefww aeaewg asdfsaas asdfasd asdfas asdfas adfase eaf
+              dsadsfasd  afsdsad dasfs adf afds adfs adsf aaewfdasd asdtae aeaaefww aeaewg asdfsaas asdfasd asdfas asdfas adfase eaf
+              dsadsfasd  afsdsad dasfs adf afds adfs adsf aaewfdasd asdtae aeaaefww aeaewg asdfsaas asdfasd asdfas asdfas adfase eaf
+                    </div>
+               
+                </div>
+             
+          <div className='blog-desc-img-div'>
+            <img src='/assets/img/img1.png' className='blog-desc-img'/>
           </div>
-       
-    <div className='blog-desc-img-div'>
-      <img src='/assets/img/img2.png' className='blog-desc-img'/>
-    </div>
-        </div>
-        <div className='blog-footer'>
-         
-         <div className='blog-type'>
-           Poetry
-         </div>
-          <div className='blog-readtime'>
-            2min read
-          </div>
-        </div>
-        </div>
+              </div>
+              <div className='blog-myposts-footer'>
+               
+               <div className='blog-type-read'>
+                 <span className='blog-type'>Poetry</span>
+               
+               <span>2min read</span>   
+                </div>
 
-      )
-    }
-    )}
-        
-        </InfiniteScroll>       
+                <div className='blog-special-insights'>
+
+                <span>1000 Likes </span>
+                <span>100 Comments </span>
+                <span>20000 Views </span>
+                <button className='blog-edit-btn'>Edit</button>   
+                </div>
+              </div>
+              </div>
+
+    )
+})}
+    
+        </InfiniteScroll>
     </div>
     
             </div>
@@ -278,4 +308,4 @@ const Home = () => {
     )
 }
 
-export default Home
+export default MyPosts

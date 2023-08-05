@@ -17,7 +17,7 @@ const responsive = {
   },
   mobile: {
     breakpoint: { max: 464, min: 0 },
-    items: 1
+    items: 2
   }
 };
 
@@ -33,7 +33,7 @@ const BlogTypesCarousel = ({ types ,handleTypeClick}) => {
         responsive={responsive}
         ssr={true}
         infinite={true}
-        autoPlay={false}
+        autoPlay={true}
         autoPlaySpeed={1000}
         keyBoardControl={true}
         customTransition="all .5"

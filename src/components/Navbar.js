@@ -1,6 +1,7 @@
 // React Component
 import React from 'react';
 import { Link } from 'react-router-dom';
+import SearchBar from './SearchBar';
 
 const Navbar = () => {
     return (
@@ -11,7 +12,8 @@ const Navbar = () => {
            <Link to='/'><img src='/assets/img/img1.png' className='nav-logo-img'/></Link>     
                 </div>
             <div className='nav-search'>
-                <input className='search-bar' placeholder='Search'/>
+                {/* <input className='search-bar' placeholder='Search'/> */}
+                <SearchBar/>
             </div>
             </div>
             
@@ -32,7 +34,7 @@ const Navbar = () => {
                 {/* <Link to="/contact">Contact</Link> */}
                 <Link to='/signup'><button className='nav-signup-btn'>Sign Up</button></Link>
               <Link to='/login'>  <button className='nav-login-btn'>Login</button></Link>
-              {/* <Link to="/profile" className='nav-about-link' ><span>Profile</span></Link> */}
+              <Link to="/profile" className='nav-about-link' ><span className='nav-profile-btn'>Me</span></Link>
             </div>
 
 
@@ -45,7 +47,8 @@ const Navbar = () => {
 <Link to='/'><img src='/assets/img/img1.png' className='nav-logo-img'/></Link>     
     </div>
 <div className='nav-search'>
-    <input className='search-bar' placeholder='Search'/>
+    {/* <input className='search-bar' placeholder='Search'/> */}
+    <SearchBar/>
 </div>
 </div>
 
@@ -62,7 +65,8 @@ const Navbar = () => {
 
     {/* <Link to="/contact">Contact</Link> */}
     <Link to='/signup'><button className='nav-signup-btn'>SignUp</button></Link>
-  {/* <Link to="/profile" className='nav-about-link' ><span>Profile</span></Link> */}
+  <Link to="/profile" className='nav-about-link' ><span className='nav-profile-btn'>Me</span></Link>
+  
 </div>
 
 
