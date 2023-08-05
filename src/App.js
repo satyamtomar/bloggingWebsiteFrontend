@@ -13,11 +13,20 @@ import MyPosts from './components/MyPosts';
 import Subscription from './components/Subscription';
 import StripeCheckout from './components/StripeCheckout';
 import EditPost from './components/EditPost';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { AuthContext } from './context/AuthContext';
 function App() {
   const {isLoggedIn,setIsLoggedIn}=useContext(AuthContext);
-   
+  useEffect(()=>{
+
+    if(localStorage.getItem('token'))
+    {
+        setIsLoggedIn(true);
+    }
+    else{
+        setIsLoggedIn(false);
+    }
+},[])
   return (
     <>
     <Router>

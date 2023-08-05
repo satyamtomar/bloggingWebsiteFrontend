@@ -1,10 +1,23 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import EditModal from './EditModal';
 import { useNavigate } from 'react-router';
+import { AuthContext } from '../context/AuthContext';
 // import './Profile.css';
 
 const Profile = () => {
     const navigate=useNavigate();
+
+    const {isLoggedIn,setIsLoggedIn}=useContext(AuthContext);
+
+    useEffect(()=>{
+     if(isLoggedIn)
+     {
+
+     } 
+     else{
+        navigate('/login');
+     } 
+    },1000);
     const user = {
         name: 'John Doe',
         bio: 'A passionate blogger and a enthusiastic sports follower',

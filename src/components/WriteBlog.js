@@ -1,13 +1,22 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import { AuthContext } from '../context/AuthContext';
+import { useNavigate } from 'react-router';
 
 const WriteBlog = () => {
+    const {isLoggedIn,setIsLoggedIn}=useContext(AuthContext);
+    const navigate=useNavigate();
     const [file,setFile]=useState();
     function handleChange(e) 
     {
         console.log(e.target.files);
         setFile(URL.createObjectURL(e.target.files[0]));
     }
- 
+   useEffect(()=>{
+  if(!isLoggedIn)
+  {
+        navigate('/login')
+  }
+   },[])
     return (
         <>
             <div className='container'>
