@@ -2,17 +2,42 @@ import React, { useContext, useEffect, useState } from 'react';
 import EditModal from './EditModal';
 import { useNavigate } from 'react-router';
 import { AuthContext } from '../context/AuthContext';
+import { ToastContainer, toast } from 'react-toastify';
+import ProfileAction from '../actions/Profile.Action';
+import BlogAction from '../actions/Blog.Action';
 // import './Profile.css';
 
 const Profile = () => {
     const navigate=useNavigate();
 
-    const {isLoggedIn,setIsLoggedIn}=useContext(AuthContext);
-
+    const {isLoggedIn,setIsLoggedIn,userProfileDetails,setUserProfileDetails}=useContext(AuthContext);
+     const [firstPost,setFirstPost]=useState([]);
     useEffect(()=>{
      if(isLoggedIn)
      {
+        let payload={
+            token:localStorage.getItem('token'),
+            post_id:1
+        }
+           BlogAction.myBlogs(payload,(err,res)=>{
+               
+            if(err)
+            {
+                toast(err);
 
+            }
+            else
+            {
+                if(res.status==200)
+                {
+                    setFirstPost(res.posts);
+                }
+                else
+                {
+                    toast(res.msg);
+                }
+            }
+           })
      } 
      else{
         navigate('/login');
@@ -29,7 +54,7 @@ const Profile = () => {
         // Other posts...
     ];
     const [isEditModalOpen,setIsEditModalOpen]=useState(false);
-    const [profileDetails,setProfileDetails]=useState({fullName:'Satyam Tomar',email:"saitamaitachi123@gmail.com",password:'12345',dob:'10th Aug, 2001'})
+    const [profileDetails,setProfileDetails]=useState({name:userProfileDetails?.name,username:userProfileDetails?.username,about:userProfileDetails?.about})
     const handleEdit=()=>
     {
    setIsEditModalOpen(!isEditModalOpen);
@@ -42,6 +67,7 @@ const Profile = () => {
     }
     return (
         <div className='container'>
+            <ToastContainer/>
             {
                 isEditModalOpen&&<EditModal 
             isOpen={isEditModalOpen}
@@ -52,9 +78,9 @@ const Profile = () => {
             />}
     <div className="profile-container">
             <div className="profile-header">
-                <img src={user.profilePicture} alt={user.name} className="profile-pic" />
-                <h2 className="profile-name">{user.name}</h2>
-                <p className="profile-bio">{user.bio}</p>
+                <img src={`${userProfileDetails?.profile_pic_url==null?user.profilePicture:userProfileDetails?.profile_pic_url}`} alt={user.name} className="profile-pic" />
+                <h2 className="profile-name">{userProfileDetails?.username}</h2>
+                <p className="profile-bio">{userProfileDetails?.about}</p>
             </div>
             {/* <div className="profile-posts">
                 <h3>My Blog Posts:</h3>
@@ -66,51 +92,53 @@ const Profile = () => {
                 ))}
             </div> */}
             <div className='blog-container'>
-            <h3>My Blog Posts:</h3>
-            <div className='blog-item'>
+            <h3>My First Post:</h3>
+            {
+
+firstPost?
+<div className='blog-item'>
               
               
-              <div className='blog-top'>
-               <div className='blog-author-name'>   
-               <span>Satyam Tomar</span>
-               <img src='/assets/img/img1.png' className='blog-author-img'/>
-               </div>
-               <div  className='blog-creation-day'>
-                <span>2 days ago</span>
-               </div>
-              </div>
-              <div className='blog-description'>
-                <div className='blog-desc-text-div'>
-                    <div className='blog-desc-title'>Title is this</div>
-                    <div className='blog-desc-text'>
-                    dsadsfasd  afsdsad dasfs adf afds adfs adsf aaewfdasd asdtae aeaaefww aeaewg asdfsaas asdfasd asdfas asdfas adfase eaf
-              dsadsfasd  afsdsad dasfs adf afds adfs adsf aaewfdasd asdtae aeaaefww aeaewg asdfsaas asdfasd asdfas asdfas adfase eaf
-              dsadsfasd  afsdsad dasfs adf afds adfs adsf aaewfdasd asdtae aeaaefww aeaewg asdfsaas asdfasd asdfas asdfas adfase eaf
-                    </div>
-               
-                </div>
-             
-          <div className='blog-desc-img-div'>
-            <img src='/assets/img/img1.png' className='blog-desc-img'/>
-          </div>
-              </div>
-              <div className='blog-myposts-footer'>
-               
-               <div className='blog-type-read'>
-                 <span className='blog-type'>Poetry</span>
-               
-               <span>2min read</span>   
-                </div>
+<div className='blog-top'>
+ <div className='blog-author-name'>   
+ <span>{userProfileDetails?.name}</span>
+ <img src='/assets/img/img1.png' className='blog-author-img'/>
+ </div>
+ <div  className='blog-creation-day'>
+  <span>2 days ago</span>
+ </div>
+</div>
+<div className='blog-description'>
+  <div className='blog-desc-text-div'>
+      <div className='blog-desc-title'>{firstPost[0]?.title}</div>
+      <div className='blog-desc-text'>
+     {firstPost[0]?.content} sdakdsk akfnaksdfn anakifnk akfnkdnk aknfgakfenk akfnmaewknk afaewinfgk akfegnkanfk akenkgnk
+      </div>
+ 
+  </div>
 
-                <div className='blog-special-insights'>
+<div className='blog-desc-img-div'>
+<img src='/assets/img/img1.png' className='blog-desc-img'/>
+</div>
+</div>
+<div className='blog-myposts-footer'>
+ 
+ <div className='blog-type-read'>
+   <span className='blog-type'>{firstPost[0]?.topics[0].name}</span>
+ 
+ <span>2min read</span>   
+  </div>
 
-                <span>1000 Likes </span>
-                <span>100 Comments </span>
-                <span>20000 Views </span>
-                    <button className='blog-edit-btn'>Edit</button>
-                </div>
-              </div>
-              </div>
+  <div className='blog-special-insights'>
+
+  <span>{firstPost[0]?.likes_count} Likes </span>
+  <span>{firstPost[0]?.comments_count} Comments </span>
+  {/* <span>20000 Views </span> */}
+      <button className='blog-edit-btn'>Edit</button>
+  </div>
+</div>
+</div>:<></>
+            }
       
    
       
@@ -119,6 +147,10 @@ const Profile = () => {
                 <button type="submit" onClick={()=>{handleClickPost()}}>Open all of my post</button>
                 <button type="submit" onClick={handleEdit}>Edit Profile</button>
             </div>
+            <div className="profile-submit-button">
+                <button type="submit" onClick={()=>{localStorage.clear();setIsLoggedIn(false);toast('logging out');setTimeout(()=>{navigate('/signup');},1000)}}>Logout</button>
+               
+                           </div>
         </div>
         </div>
     

@@ -5,6 +5,7 @@ import {toast,ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { TailSpin } from "react-loader-spinner";
 import InfiniteScroll from 'react-infinite-scroll-component';
+import BlogAction from '../actions/Blog.Action';
 
 const MyPosts = () => {
    const [mainLoader,setMainLoader]=useState(false);   
@@ -16,19 +17,41 @@ const MyPosts = () => {
         
   const [posts, setPosts] = useState([]);
   const [hasMore, setHasMore] = useState(true);
-
+  const [newPosts,setNewPosts]=useState([]);
   // replace with your API
   const fetchPosts = async () => {
     // const response = await fetch('https://api.example.com/posts?start=' + posts?.length);
-    const newPosts = [{title:'this is this',
-    desc:'  dsadsfasd  afsdsad dasfs adf afds adfs adsf aaewfdasd asdtae aeaaefww aeaewg asdfsaas asdfasd asdfas asdfas adfase eafdsadsfasd  afsdsad dasfs adf afds adfs adsf aaewfdasd asdtae aeaaefww aeaewg asdfsaas asdfasd asdfas asdfas adfase eafdsadsfasd  afsdsad dasfs adf afds adfs adsf aaewfdasd asdtae aeaaefww aeaewg asdfsaas asdfasd asdfas asdfas adfase eaf',authorName:'Satyam Tomar'},
-  ];
+    let payload={token:localStorage.getItem('token')}
+    // setMainLoader(true)
+    BlogAction.myBlogs(payload,(err,res)=>{
+
+
+      if(err)
+      {
+        toast(err);
+      }
+      else
+      {
+         if(res.status==200)
+         {
+          setNewPosts(res.posts)
+           toast(res.msg);
+
+           if (res?.posts?.length > 0) {
+            setTimeout(()=>{setPosts((prevPosts) => prevPosts.concat(res.posts));},1500) 
+           } else {
+             setHasMore(false);
+           }
+         }
+         else{
+          toast(res.msg);
+         }
+         
+      }
+       setMainLoader(false);
+    })
   
-    if (newPosts?.length > 0) {
-     setTimeout(()=>{setPosts((prevPosts) => prevPosts.concat(newPosts));},1500) 
-    } else {
-      setHasMore(false);
-    }
+    
   };
 
   useEffect(() => {
@@ -46,13 +69,13 @@ const MyPosts = () => {
         <ToastContainer
         theme='dark'/>
             <div className='container'>
-   <div className='home-blog-types'>
+   {/* <div className='home-blog-types'>
    <BlogTypesCarousel 
     types={['tech', 'sports', 'media', 'global', 'trend','study','javascript','reactjs','freetime']} 
     handleTypeClick={handleTypeClick} 
 
 />
-   </div>
+   </div> */}
    <div className='home-blog-type-selected'>
     My Posts
    </div>
@@ -60,7 +83,7 @@ const MyPosts = () => {
 
   
 
-    <div className='blog-item'>
+    {/* <div className='blog-item'>
               
               
               <div className='blog-top'>
@@ -103,140 +126,8 @@ const MyPosts = () => {
                 <button className='blog-edit-btn'>Edit</button>   
                 </div>
               </div>
-              </div>
+              </div> */}
 
-              <div className='blog-item'>
-              
-              
-              <div className='blog-top'>
-               <div className='blog-author-name'>   
-               <span>Satyam Tomar</span>
-               <img src='/assets/img/img1.png' className='blog-author-img'/>
-               </div>
-               <div  className='blog-creation-day'>
-                <span>2 days ago</span>
-               </div>
-              </div>
-              <div className='blog-description'>
-                <div className='blog-desc-text-div'>
-                    <div className='blog-desc-title'>Title is this</div>
-                    <div className='blog-desc-text'>
-                    dsadsfasd  afsdsad dasfs adf afds adfs adsf aaewfdasd asdtae aeaaefww aeaewg asdfsaas asdfasd asdfas asdfas adfase eaf
-              dsadsfasd  afsdsad dasfs adf afds adfs adsf aaewfdasd asdtae aeaaefww aeaewg asdfsaas asdfasd asdfas asdfas adfase eaf
-              dsadsfasd  afsdsad dasfs adf afds adfs adsf aaewfdasd asdtae aeaaefww aeaewg asdfsaas asdfasd asdfas asdfas adfase eaf
-                    </div>
-               
-                </div>
-             
-          <div className='blog-desc-img-div'>
-            <img src='/assets/img/img1.png' className='blog-desc-img'/>
-          </div>
-              </div>
-              <div className='blog-myposts-footer'>
-               
-               <div className='blog-type-read'>
-                 <span className='blog-type'>Poetry</span>
-               
-               <span>2min read</span>   
-                </div>
-
-                <div className='blog-special-insights'>
-
-                <span>1000 Likes </span>
-                <span>100 Comments </span>
-                <span>20000 Views </span>
-                <button className='blog-edit-btn'>Edit</button>   
-                </div>
-              </div>
-              </div>
-              <div className='blog-item'>
-              
-              
-              <div className='blog-top'>
-               <div className='blog-author-name'>   
-               <span>Satyam Tomar</span>
-               <img src='/assets/img/img1.png' className='blog-author-img'/>
-               </div>
-               <div  className='blog-creation-day'>
-                <span>2 days ago</span>
-               </div>
-              </div>
-              <div className='blog-description'>
-                <div className='blog-desc-text-div'>
-                    <div className='blog-desc-title'>Title is this</div>
-                    <div className='blog-desc-text'>
-                    dsadsfasd  afsdsad dasfs adf afds adfs adsf aaewfdasd asdtae aeaaefww aeaewg asdfsaas asdfasd asdfas asdfas adfase eaf
-              dsadsfasd  afsdsad dasfs adf afds adfs adsf aaewfdasd asdtae aeaaefww aeaewg asdfsaas asdfasd asdfas asdfas adfase eaf
-              dsadsfasd  afsdsad dasfs adf afds adfs adsf aaewfdasd asdtae aeaaefww aeaewg asdfsaas asdfasd asdfas asdfas adfase eaf
-                    </div>
-               
-                </div>
-             
-          <div className='blog-desc-img-div'>
-            <img src='/assets/img/img1.png' className='blog-desc-img'/>
-          </div>
-              </div>
-              <div className='blog-myposts-footer'>
-               
-               <div className='blog-type-read'>
-                 <span className='blog-type'>Poetry</span>
-               
-               <span>2min read</span>   
-                </div>
-
-                <div className='blog-special-insights'>
-
-                <span>1000 Likes </span>
-                <span>100 Comments </span>
-                <span>20000 Views </span>
-                <button className='blog-edit-btn'>Edit</button>   
-                </div>
-              </div>
-              </div>
-              <div className='blog-item'>
-              
-              
-              <div className='blog-top'>
-               <div className='blog-author-name'>   
-               <span>Satyam Tomar</span>
-               <img src='/assets/img/img1.png' className='blog-author-img'/>
-               </div>
-               <div  className='blog-creation-day'>
-                <span>2 days ago</span>
-               </div>
-              </div>
-              <div className='blog-description'>
-                <div className='blog-desc-text-div'>
-                    <div className='blog-desc-title'>Title is this</div>
-                    <div className='blog-desc-text'>
-                    dsadsfasd  afsdsad dasfs adf afds adfs adsf aaewfdasd asdtae aeaaefww aeaewg asdfsaas asdfasd asdfas asdfas adfase eaf
-              dsadsfasd  afsdsad dasfs adf afds adfs adsf aaewfdasd asdtae aeaaefww aeaewg asdfsaas asdfasd asdfas asdfas adfase eaf
-              dsadsfasd  afsdsad dasfs adf afds adfs adsf aaewfdasd asdtae aeaaefww aeaewg asdfsaas asdfasd asdfas asdfas adfase eaf
-                    </div>
-               
-                </div>
-             
-          <div className='blog-desc-img-div'>
-            <img src='/assets/img/img1.png' className='blog-desc-img'/>
-          </div>
-              </div>
-              <div className='blog-myposts-footer'>
-               
-               <div className='blog-type-read'>
-                 <span className='blog-type'>Poetry</span>
-               
-               <span>2min read</span>   
-                </div>
-
-                <div className='blog-special-insights'>
-
-                <span>1000 Likes </span>
-                <span>100 Comments </span>
-                <span>20000 Views </span>
-                <button className='blog-edit-btn'>Edit</button>   
-                </div>
-              </div>
-              </div>
     
               <InfiniteScroll
         dataLength={posts.length}
@@ -257,7 +148,7 @@ const MyPosts = () => {
               
               <div className='blog-top'>
                <div className='blog-author-name'>   
-               <span>Satyam Tomar</span>
+               <span>{post?.user_Detils.username}</span>
                <img src='/assets/img/img1.png' className='blog-author-img'/>
                </div>
                <div  className='blog-creation-day'>
@@ -266,11 +157,10 @@ const MyPosts = () => {
               </div>
               <div className='blog-description'>
                 <div className='blog-desc-text-div'>
-                    <div className='blog-desc-title'>Title is this</div>
+                    <div className='blog-desc-title'>{post?.title}</div>
                     <div className='blog-desc-text'>
-                    dsadsfasd  afsdsad dasfs adf afds adfs adsf aaewfdasd asdtae aeaaefww aeaewg asdfsaas asdfasd asdfas asdfas adfase eaf
-              dsadsfasd  afsdsad dasfs adf afds adfs adsf aaewfdasd asdtae aeaaefww aeaewg asdfsaas asdfasd asdfas asdfas adfase eaf
-              dsadsfasd  afsdsad dasfs adf afds adfs adsf aaewfdasd asdtae aeaaefww aeaewg asdfsaas asdfasd asdfas asdfas adfase eaf
+                   {post?.content}
+                   sdakask akfaklf  akfaskn kakfnawklenfi akeaiefnkan akefawkneklanwek akfnakgneklan akfnawkengka akenaken akfnaklnakln
                     </div>
                
                 </div>
@@ -282,16 +172,16 @@ const MyPosts = () => {
               <div className='blog-myposts-footer'>
                
                <div className='blog-type-read'>
-                 <span className='blog-type'>Poetry</span>
+                 <span className='blog-type'>{post?.topics[0].name}</span>
                
                <span>2min read</span>   
                 </div>
 
                 <div className='blog-special-insights'>
 
-                <span>1000 Likes </span>
-                <span>100 Comments </span>
-                <span>20000 Views </span>
+                <span>{post.likes_count} Likes </span>
+                <span>{post.comments_count} Comments </span>
+                {/* <span>20000 Views </span> */}
                 <button className='blog-edit-btn'>Edit</button>   
                 </div>
               </div>

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Modal from 'react-modal';
+import ProfileAction from '../actions/Profile.Action';
+import { ToastContainer, toast } from 'react-toastify';
 
 // Modal.setAppElement('#root') // replace '#root' with the id of your application node
 
@@ -63,6 +65,38 @@ function EditModal({
        
     //   }, [newList])
       
+
+    const handleProfileEdit=async()=>{
+  
+      let payload={
+        username:details.username,
+        name:details.name,
+        about:details.about,
+        token:localStorage.getItem('token')
+
+      }
+         ProfileAction.editUserDetails(payload,(err,res)=>{
+
+          if(err)
+          {
+            toast(err);
+          }
+          else
+          {
+            if(res.status==200)
+            {
+              toast('successfully edited')
+                 setTimeout(()=>{window.location.reload();},500)
+                 
+            }
+            else
+
+            {
+              toast(res.msg);
+            }
+          }
+         })
+    }
   return (
     
 <Modal 
@@ -78,23 +112,26 @@ function EditModal({
         <div className='editModalDiv'>
         
         <span>Full Name</span>
-        <input value={details?.fullName} name='fullname'     style={inputStyles} onChange={handleChangeDetails} />
+        <input value={details?.name} name='name'     style={inputStyles} onChange={handleChangeDetails} />
       </div>
-      <div className='editModalDiv'>
+      {/* <div className='editModalDiv'>
 
         <span>Email</span>
         <input value={details?.email} name='email'  style={inputStyles} onChange={handleChangeDetails}  />
+      </div> */}
+      <div className='editModalDiv'>
+        <span>Username</span>
+        <input value={details?.username} name='username'   style={inputStyles} onChange={handleChangeDetails} />
       </div>
       <div className='editModalDiv'>
-        <span>Password</span>
-        <input value={details?.Type} name='password' type='password'   style={inputStyles} onChange={handleChangeDetails} />
+        <span>Bio</span>
+        <input value={details?.about} name='about'  type='text-area'   style={inputStyles}  onChange={handleChangeDetails} />
       </div>
-      <div className='editModalDiv'>
-        <span>Date of Birth</span>
-        <input value={details?.dob} name='dob'  type='datatime-local'   style={inputStyles}  onChange={handleChangeDetails} />
-      </div>
-     
-      <button onClick={()=>{closeModal();}} style={buttonStyles}>Edit Profile</button>
+      {/* <div className='editModalDiv'>
+        <span>Profile Pic</span>
+        <input value={details?.profile_pic} name='profile_pic'  type='file'   style={inputStyles}  onChange={handleChangeDetails} />
+      </div> */}
+      <button onClick={()=>{closeModal();handleProfileEdit();}} style={buttonStyles}>Edit Profile</button>
     </Modal>
   );
 }

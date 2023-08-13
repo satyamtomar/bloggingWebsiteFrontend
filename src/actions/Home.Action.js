@@ -3,35 +3,15 @@ import Agent from "./superAgent";
 import { ServerError } from '../utils/helpers';
 const BACKEND_URL = '';
 
-  
-  
-// function getBorhanUserDetails( cb) {
-//     Agent
-//       .fire('get', `${BACKEND_URL}/website/getBorhanUserDetails`)
-//       .end((err, res) => {
-//         var error = err || res.error ? ServerError(res) : (res.body && res.body.error) ? ServerError(res) : null;
-//         if (typeof cb === 'function') return cb(error, res && res.body);
-//       });
-//   }
-  function userSignUp(payload ,cb) {
-    Agent
-      .fire('get', `http://127.0.0.1:3000/sign_up`)
-      .send(payload)
-      .end((err, res) => {
-        var error = err || res.error ? ServerError(res) : (res.body && res.body.error) ? ServerError(res) : null;
-        if (typeof cb === 'function') return cb(error, res && res.body);
-      });
-  }
-//   const editBorhanUserDetails=(payload,cb)=>{
-//     Agent
-//     .fire('put', `${BACKEND_URL}/website/editBorhanUserDetails`)
-//     .send(payload)
-//     .end((err, res) => {
-//       var error = err || res.error ? ServerError(res) : (res.body && res.body.error) ? ServerError(res) : null;
-//       if (typeof cb === 'function') return cb(error, res && res.body);
-//     });
-//   }
-  
+function userDetails(payload ,cb) {
+  Agent
+    .fire('post', `http://localhost:3000/get-profile`)
+    .send(payload)
+    .end((err, res) => {
+      var error = err || res.error ? ServerError(res) : (res.body && res.body.error) ? ServerError(res) : null;
+      if (typeof cb === 'function') return cb(error, res && res.body);
+    });
+}
 export default {
-    userSignUp
+    // userSignUp
   }

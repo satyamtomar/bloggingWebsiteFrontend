@@ -3,19 +3,9 @@ import Agent from "./superAgent";
 import { ServerError } from '../utils/helpers';
 const BACKEND_URL = '';
 
-  
-  
-// function getBorhanUserDetails( cb) {
-//     Agent
-//       .fire('get', `${BACKEND_URL}/website/getBorhanUserDetails`)
-//       .end((err, res) => {
-//         var error = err || res.error ? ServerError(res) : (res.body && res.body.error) ? ServerError(res) : null;
-//         if (typeof cb === 'function') return cb(error, res && res.body);
-//       });
-//   }
-  function userSignUp(payload ,cb) {
+  function userLogin(payload ,cb) {
     Agent
-      .fire('get', `http://127.0.0.1:3000/sign_up`)
+      .fire('post', `http://localhost:3000/login`)
       .send(payload)
       .end((err, res) => {
         var error = err || res.error ? ServerError(res) : (res.body && res.body.error) ? ServerError(res) : null;
@@ -33,5 +23,5 @@ const BACKEND_URL = '';
 //   }
   
 export default {
-    userSignUp
+  userLogin
   }
