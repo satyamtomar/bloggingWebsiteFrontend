@@ -1,74 +1,59 @@
-import React, { useContext, useEffect, useState } from 'react'
-// import BlogTypeCarousel from './BlogTypeCarousel';
+import React, { useEffect, useState } from 'react'
+import { TailSpin } from 'react-loader-spinner'
 import BlogTypesCarousel from './BlogTypeCarousel';
-import {toast,ToastContainer} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { TailSpin } from "react-loader-spinner";
-import InfiniteScroll from 'react-infinite-scroll-component';
-import { AuthContext } from '../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 import BlogAction from '../actions/Blog.Action';
+import { useParams } from 'react-router-dom';
 
-const Home = () => {
-   const [mainLoader,setMainLoader]=useState(false);   
-   const {isLoggedIn,setIsLoggedIn}=useContext(AuthContext);
-   const navigate=useNavigate();
-  const handleTypeClick=async(type)=>
-  {
+const SearchResults = () => {
+    const [mainLoader,setMainLoader]=useState(false);
+    const [posts,setPosts]=useState();
+    let { id } = useParams();
+    // const [posts,setPosts]=useState([]);
+    const handleSearch = async() => {
+    // setSearch('satyam');
+        // if (event.target.value !== '') {
+        //   const filteredResults = blogs.filter(blog => 
+        //     blog.title.toLowerCase().includes(event.target.value.toLowerCase())
+        //   );
+        //   setResults(filteredResults);
+        // } else {
+        //   setResults([]);
+        console.log(id,'hiiihi')
+        setMainLoader(true);
+        let payload={
+          token:localStorage.getItem('token'),keyword:id
+        }
+       BlogAction.searchPosts(payload,(err,res)=>{
     
-  }
-
-  const [posts, setPosts] = useState([]);
-  const [hasMore, setHasMore] = useState(true);
-  const [newPosts,setNewPosts]=useState([]);
-  // replace with your API
-  const fetchPosts = async () => {
-    // const response = await fetch('https://api.example.com/posts?start=' + posts?.length);
-  //   const newPosts = [{title:'this is this',
-  //   desc:'  dsadsfasd  afsdsad dasfs adf afds adfs adsf aaewfdasd asdtae aeaaefww aeaewg asdfsaas asdfasd asdfas asdfas adfase eafdsadsfasd  afsdsad dasfs adf afds adfs adsf aaewfdasd asdtae aeaaefww aeaewg asdfsaas asdfasd asdfas asdfas adfase eafdsadsfasd  afsdsad dasfs adf afds adfs adsf aaewfdasd asdtae aeaaefww aeaewg asdfsaas asdfasd asdfas asdfas adfase eaf',authorName:'Satyam Tomar'},
-  // ];
-  let payload={
-    token:localStorage.getItem('token')
-  }
-     BlogAction.viewBlogs(payload,(err,res)=>{
-
-      if(err)
-      {
-toast(err);   
-      }
-      else
-      {
-
-        if(res.status==200)
+        if(err)
         {
-         setNewPosts(res.posts);
-         if (res?.posts?.length > 0) {
-          setTimeout(()=>{setPosts((prevPosts) => prevPosts.concat(res?.posts));},1000) 
-         } else {
-           setHasMore(false);
-         }
+          toast(err);
         }
         else
         {
-          toast(res.msg);
+            // toast(res.msg);
+            if(res.status==200)
+            {
+              setPosts(res.postsList);
+              // toast('success');
+            }
+            else
+            {
+              toast(res.msg);
+            }
         }
-      }
-     })
-    
-  };
-
-  useEffect(() => {
-    if(isLoggedIn)
-    fetchPosts();
-    else
-    {
-      navigate('/signup')
-    }
-  }, []);
-        
-    return (
-
-        <>
+    setMainLoader(false);
+       })
+      
+        }
+      useEffect(() => {
+        handleSearch();
+      }, [])
+      
+   
+  return (
+    <>
             {mainLoader ? (
           <div className="custm-loader">
             <TailSpin color="#000" height={200} width={200}  />
@@ -77,16 +62,9 @@ toast(err);
         <ToastContainer
         theme='dark'/>
             <div className='container'>
-   <div className='home-blog-types'>
-   <BlogTypesCarousel 
-    // types={['tech', 'sports', 'media', 'global', 'trend','study','javascript','reactjs','freetime']} 
-    types={['recommended','top post','recommended','top post','recommended','top post']}
-    handleTypeClick={handleTypeClick} 
-
-/>
-   </div>
+   
    <div className='home-blog-type-selected'>
-    TRENDING
+    Searched Results
    </div>
     <div className='blog-container' >
 
@@ -128,7 +106,7 @@ toast(err);
               </div>
               </div> */}
 
-              <InfiniteScroll
+              {/* <InfiniteScroll
         dataLength={posts.length}
         next={fetchPosts}
         hasMore={hasMore}
@@ -139,8 +117,8 @@ toast(err);
             <b>Yay! You have seen it all</b>
           </p>
         }
-      >
-{posts.map((post, index) => 
+      > */}
+{posts?.map((post, index) => 
     {
       return(
 
@@ -149,7 +127,7 @@ toast(err);
               
         <div className='blog-top'>
          <div className='blog-author-name'>   
-         <span>{post?.user_Detils.username}</span>
+         <span>{post?.user_Detils?.username}</span>
          <img src='/assets/img/img1.png' className='blog-author-img'/>
          </div>
          <div  className='blog-creation-day'>
@@ -162,7 +140,7 @@ toast(err);
               <div className='blog-desc-text'>
              {post?.content}
              sdakask akfaklf  akfaskn kakfnawklenfi akeaiefnkan akefawkneklanwek akfnakgneklan akfnawkengka akenaken akfnaklnakln
-              </div>
+        asdfsak akfnkasn akfnaksdn akfnaksnf akgdsnkgsan agnaksnd aeansaks akfenaksenk akwegnakegnk angeksgndkldndakg akgenakgnkia akgneasknkangk      </div>
          
           </div>
        
@@ -192,12 +170,12 @@ toast(err);
     }
     )}
         
-        </InfiniteScroll>       
+        {/* </InfiniteScroll>        */}
     </div>
     
             </div>
         </>
-    )
+  )
 }
 
-export default Home
+export default SearchResults

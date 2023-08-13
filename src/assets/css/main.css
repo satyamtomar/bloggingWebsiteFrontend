@@ -669,9 +669,22 @@ width: 100%;
   background-color: #adb3b8;
 }
 
+.search-containerr
+{
+  display: flex;
+  flex-direction: row;
 
-
-
+  align-items: center;
+}
+.icon-div
+{
+  border-radius: 10px;
+  font-size: 22px;
+}
+.custom-icon-size
+{
+  border-radius: 50%;
+}
 /* blog page */
 
 .blog-page-container
@@ -759,7 +772,12 @@ width: 100%;
   font-weight: 700;
   color: #3a3e41;
 }
-
+.no-underline
+{
+  text-decoration: none;
+  color: #1d1c1c;
+  font-weight: 600;
+}
 .blog-page-image-title
 {
   width: 100%;
@@ -780,6 +798,7 @@ width: 100%;
 
 .search-results {
   position: absolute;
+  top: 50px;
   background: white;
   border: 1px solid #ccc;
   width: 300px;

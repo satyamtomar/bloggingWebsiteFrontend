@@ -17,6 +17,11 @@ import { useContext, useEffect } from 'react';
 import { AuthContext } from './context/AuthContext';
 import ProfileAction from './actions/Profile.Action';
 import { toast } from 'react-toastify';
+import SearchResults from './components/SearchResults';
+import 'font-awesome/css/font-awesome.min.css';
+import TopPosts from './components/TopPosts';
+import RecommendedPosts from './components/RecommendedPosts';
+
 function App() {
   const {isLoggedIn,setIsLoggedIn,userProfileDetails,setUserProfileDetails}=useContext(AuthContext);
   useEffect(()=>{
@@ -63,7 +68,7 @@ let payload={
           
          <Route exact path="/login" key="Login"  element={<Login/>} />
         
-          <Route exact path="/blog" key="Blog"  element={<Blog/>} />
+          <Route exact path="/blog/:id" key="Blog"  element={<Blog/>} />
         
          <Route exact path="/signup" key="SignUp"  element={<SignUp/>} />
         
@@ -72,10 +77,12 @@ let payload={
          <Route exact path="/writeblog" key="WriteBlog"  element={<WriteBlog/>} />
          <Route exact path="/subscription" key="Subscription"  element={<Subscription/>} />
          <Route exact path="/stripecheckout" key="Stripe"  element={<StripeCheckout/>} />
-         <Route exact path="/editpost" key="EditPost"  element={<EditPost/>} />
+         <Route exact path="/editpost/:id" key="EditPost"  element={<EditPost/>} />
           
 
-         {/* <Route exact path='/movieDetails/:id' key="movieDetails" element={<MovieDetails/>}/> */}
+         <Route exact path='search/:id' key="searchResult" element={<SearchResults/>}/>
+         <Route exact path='top-posts' key="top-posts" element={<TopPosts/>}/>
+         <Route exact path='recommended-posts' key="recommended-posts" element={<RecommendedPosts/>}/>
           
          </Routes>
          </Router>

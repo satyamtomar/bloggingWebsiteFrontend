@@ -5,6 +5,7 @@ import { AuthContext } from '../context/AuthContext';
 import { ToastContainer, toast } from 'react-toastify';
 import ProfileAction from '../actions/Profile.Action';
 import BlogAction from '../actions/Blog.Action';
+import { Link } from 'react-router-dom';
 // import './Profile.css';
 
 const Profile = () => {
@@ -64,6 +65,29 @@ const Profile = () => {
     function handleClickPost()
     {
         navigate('/mypost');
+    }
+    const handleDelete=async()=>{
+ let payload={
+    token:localStorage.getItem('token'),post_id:firstPost[0].id
+ }
+        BlogAction.deletePost(payload,(err,res)=>{
+
+            if(err)
+            {
+                toast(err);
+            }
+            else
+            {
+                if(res.status==200)
+                {
+               toast(res.msg);
+                }
+                else
+                {
+toast(res.msg);
+                }
+            }
+        })
     }
     return (
         <div className='container'>
@@ -134,7 +158,10 @@ firstPost?
   <span>{firstPost[0]?.likes_count} Likes </span>
   <span>{firstPost[0]?.comments_count} Comments </span>
   {/* <span>20000 Views </span> */}
-      <button className='blog-edit-btn'>Edit</button>
+  <Link to={`/blog/${firstPost[0]?.id}`} ><button className='blog-edit-btn'>View</button></Link>
+  <Link to={`/editpost/${firstPost[0]?.id}`} ><button className='blog-edit-btn'>Edit</button></Link>
+<button className='blog-edit-btn' onClick={handleDelete}>Delete</button>
+  
   </div>
 </div>
 </div>:<></>

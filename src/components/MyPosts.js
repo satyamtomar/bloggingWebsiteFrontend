@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { TailSpin } from "react-loader-spinner";
 import InfiniteScroll from 'react-infinite-scroll-component';
 import BlogAction from '../actions/Blog.Action';
+import { Link } from 'react-router-dom';
 
 const MyPosts = () => {
    const [mainLoader,setMainLoader]=useState(false);   
@@ -182,7 +183,7 @@ const MyPosts = () => {
                 <span>{post.likes_count} Likes </span>
                 <span>{post.comments_count} Comments </span>
                 {/* <span>20000 Views </span> */}
-                <button className='blog-edit-btn'>Edit</button>   
+               <Link to={`/editpost/${post.id}`} ><button className='blog-edit-btn' >Edit</button></Link>   
                 </div>
               </div>
               </div>

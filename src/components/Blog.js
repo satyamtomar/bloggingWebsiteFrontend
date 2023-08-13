@@ -1,8 +1,17 @@
 import React from 'react'
+import { useParams } from 'react-router-dom';
 
 const Blog = () => {
+    const {id}=useParams();
   return (
     <div className='container'>
+            {mainLoader ? (
+          <div className="custm-loader">
+            <TailSpin color="#000" height={200} width={200}  />
+          </div>
+         ) : null}
+        <ToastContainer
+        theme='dark'/>
         <div className='blog-page-container'>
 
             <div className='blog-page-title'>

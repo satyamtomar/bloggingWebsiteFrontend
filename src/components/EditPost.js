@@ -1,46 +1,130 @@
-import React, { useState } from 'react'
-import EditModal from './EditModal';
-
-const EditPost= () => {
-    const [file,setFile]=useState();
-    function handleChange(e) 
-    {
+import React, { useContext, useEffect, useState } from 'react'
+import { AuthContext } from '../context/AuthContext';
+import { useNavigate } from 'react-router';
+import BlogAction from '../actions/Blog.Action';
+import { ToastContainer, toast } from 'react-toastify';
+import { TailSpin } from 'react-loader-spinner';
+import { useParams } from 'react-router-dom';
+const EditPost = () => {
+    const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+    const navigate = useNavigate();
+    const [file, setFile] = useState();
+    const [title, setTitle] = useState('');
+    const [content, setContent] = useState('');
+    const [topic, setTopic] = useState('technology');
+    const [mainLoader, setMainLoader] = useState(false);
+    const [post,setPost]=useState();
+    const { id } = useParams();
+    function handleChange(e) {
         console.log(e.target.files);
         setFile(URL.createObjectURL(e.target.files[0]));
     }
- 
+    useEffect(() => {
+        if (!isLoggedIn) {
+            navigate('/login');
+            
+        }
+        let payload={token:localStorage.getItem('token'),post_id:id}
+        BlogAction.getAPost(payload, (err, res) => {
+          if(err)
+          {
+            toast(err);
+          }
+          else
+          {
+            if(res.status==200)
+            {
+               setPost(res?.post);
+               setTitle(res?.post?.title);
+               setTopic(res?.post?.topics[0].name);
+               setContent(res?.post?.content);
+            }
+            else
+            {
+              toast(res.msg)
+            }
+          }
+        })
+    }, [])
+
+    const handleEdit = async () => {
+        let payload = {
+            title, content, topics: [topic],
+            token: localStorage.getItem('token'),
+            publish_status: true,
+            post_id:id
+        }
+        setMainLoader(true);
+        BlogAction.editPost(payload, (err, res) => {
+
+            if (err) {
+                toast(err);
+            }
+            else {
+                if (res.status == 200) {
+                    toast(res.msg);
+                    setTitle('');
+                    setContent('');
+                    setTopic('technology');
+                }
+                else {
+                    toast(res.msg);
+                }
+            }
+            setMainLoader(false)
+        })
+    }
     return (
         <>
+            {mainLoader ? (
+                <div className="custm-loader">
+                    <TailSpin color="#000" height={200} width={200} />
+                </div>
+            ) : null}
+            <ToastContainer />
             <div className='container'>
 
                 <div className='write-blog-container'>
                     <div >
-                        <input className='write-blog-input-title' placeholder='Title' />
+                        <input className='write-blog-input-title' placeholder='Title' value={title} onChange={(e) => { setTitle(e.target.value) }} />
                     </div>
                     <div>
-                        <textarea className='write-blog-input-desc' type='textArea' placeholder='Write your story' />
+                        <textarea className='write-blog-input-desc' type='textArea' value={content} placeholder='Write your story' onChange={(e) => { setContent(e.target.value) }} />
                     </div>
                     <div className='write-blog-footer'>
- 
-             <div className='write-blog-input-image'>
+
+                        {/* <div className='write-blog-input-image'>
              <input type="file" onChange={handleChange} />
             <img src={file} className='' />
-            </div>
-            <div className='write-blog-submit-div'>
-            <button className='write-blog-submit'>Submit</button>
+            </div> */}
+                        <div className='write-blog-select-topic'>
+                            <select id="priorityList" value={topic} onChange={(e) => { setTopic(e.target.value) }}>
+                                <option value="technology" >Technology</option>
+                                <option value="sports">Sports</option>
+                                <option value="cricket">Cricket</option>
+                                <option value="study">Study</option>
+                                <option value="news">News</option>
+                                <option value="boxing">Boxing</option>
+                                <option value="entertainment">Entertainment</option>
+                                <option value="politics">Politics</option>
 
-            </div>
-            
-             </div>
-            
-        
-    
+                            </select>
+                        </div>
+                        <div className='write-blog-submit-div'>
+                            <button className='write-blog-submit' onClick={handleEdit}>Submit</button>
+
+                        </div>
+
                     </div>
+
+
+
                 </div>
+            </div>
 
 
         </>
     )
 }
 
-export default EditPost;
+export default EditPost
