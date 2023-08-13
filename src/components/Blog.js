@@ -4,12 +4,16 @@ import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import { AuthContext } from '../context/AuthContext';
 import BlogAction from '../actions/Blog.Action';
+import ListAction from '../actions/List.Action';
+import SaveLaterAction from '../actions/SaveLater.Action';
 
 const Blog = () => {
     const {id}=useParams();
     const [mainLoader,setMainLoader]=useState(false);
     const {isLoggedIn,setIsLoggedIn}=useContext(AuthContext);
     const [blog,setBlog]=useState();
+    const [lists,setLists]=useState();
+    const [openList,setOpenList]=useState(false)
     const navigate=useNavigate();
     const helperPay=async()=>{
         let payload={token:localStorage.getItem('token'),post_id:id}
@@ -48,6 +52,76 @@ const Blog = () => {
             navigate('/');
         }
     },[])
+
+
+    const getLists=async()=>{
+
+        let payload={token:localStorage.getItem('token')}
+    
+        ListAction.viewLists(payload,(err,res)=>{
+    
+          if(err)
+          {
+            toast(err);
+          }
+          else
+          {
+            if(res.status==200)
+            {
+               setLists(res.lists);
+            }
+            else
+            {
+              toast(res.msg)
+            }
+          }
+        })
+      }
+  const addToList=async(listID)=>{
+ let payload={
+    token:localStorage.getItem('token'),
+    post_id:id,
+    list_id:listID
+ };
+    ListAction.addToList(payload,(err,res)=>{
+        if(err)
+        {
+            toast(err);
+        }
+        else{
+            if(res.status==200)
+            {
+                toast(res.msg);
+            }
+            else{
+                toast(res.msg);
+            }
+        }
+    })
+}
+
+const handleAddToSaveLater=async()=>{
+
+    let payload={token:localStorage.getItem('token'),post_id:id}
+
+    SaveLaterAction.addSaveLater(payload,(err,res)=>{
+
+        if(err)
+        {
+         toast(err);
+        }
+        else{
+           if(res.status==200)
+           {
+               toast(res.msg);
+           }
+           else
+           {
+            toast(res.msg)
+           }
+        }
+    })
+}
   return (
     <div className='container'>
             {mainLoader ? (
@@ -91,6 +165,30 @@ const Blog = () => {
                     <span> {blog?.likes_count} likes</span>
                     <span> {blog?.comments_count} comments</span>
                 </div>
+            </div>
+            <div className='blog-page-save-drafts'>
+           
+           <div>
+           <button onClick={()=>{handleAddToSaveLater()}} >Save</button>
+           </div>
+           <div>
+            <button  onClick={()=>{getLists();setOpenList(!openList)}}>Add to List</button>
+            
+            
+           {
+            openList &&
+            <div className="list-results">
+           <h2>Click on List to Add</h2>
+        
+          {lists?.map((list, index) => (
+            <div key={1} className="search-result-item" onClick={()=>{setOpenList(false);addToList(list.id)}}>
+              {list.name}
+            </div>
+          ))} 
+        </div>
+           }
+           
+           </div>
             </div>
             <div className='blog-page-desc'>
 

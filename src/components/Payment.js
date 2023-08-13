@@ -2,6 +2,7 @@
 import React, { useContext, useState } from 'react';
 import useRazorpay from "react-razorpay";
 import { AuthContext } from '../context/AuthContext';
+import { ToastContainer, toast } from 'react-toastify';
 
 const OrderForm = () => {
     const [Razorpay] = useRazorpay();
@@ -42,7 +43,7 @@ const OrderForm = () => {
     // Initiate Razorpay payment
     const options = {
       key: 'rzp_test_7IZgK3XELZCVEm',
-      amount: amount * 100, // Amount in paisa
+      amount: price * 100, // Amount in paisa
       currency: 'INR',
       order_id: orderId,
       name: 'Your Company',
@@ -58,7 +59,7 @@ const OrderForm = () => {
           }).then((res) => {
               return res.json()
           })
-          console.log(serverResponse)
+          toast(serverResponse.msg);
       },
     };
     const rzp = new Razorpay(options);
@@ -73,6 +74,7 @@ const OrderForm = () => {
         value={amount}
         onChange={(e) => setAmount(e.target.value)}
       /> */}
+      {<ToastContainer/>}
       <div className="subscription-page">
             <h1>Choose your Subscription</h1>
             <div className="subscription-cards">

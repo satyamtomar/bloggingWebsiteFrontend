@@ -175,9 +175,16 @@ firstPost?
                 <button type="submit" onClick={handleEdit}>Edit Profile</button>
             </div>
             <div className="profile-submit-button">
-                <button type="submit" onClick={()=>{localStorage.clear();setIsLoggedIn(false);toast('logging out');setTimeout(()=>{navigate('/signup');},1000)}}>Logout</button>
+          <Link to={`/viewmylists`}><button type="submit" >Your Lists</button></Link>
+            <Link to={'/drafts'}><button type="submit" >Your Drafts</button></Link>
+           
                
                            </div>
+                           <div className="profile-submit-button">
+              <Link to='/savelaters'>  <button type="submit" >Save Laters</button></Link>
+                <button type="submit" onClick={()=>{localStorage.clear();setIsLoggedIn(false);toast('logging out');setTimeout(()=>{navigate('/signup');},1000)}}>Logout</button>
+             
+            </div>               
         </div>
         </div>
     

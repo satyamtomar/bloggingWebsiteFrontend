@@ -7,6 +7,7 @@ import { TailSpin } from "react-loader-spinner";
 import InfiniteScroll from 'react-infinite-scroll-component';
 import BlogAction from '../actions/Blog.Action';
 import { Link } from 'react-router-dom';
+import DraftsAction from '../actions/Drafts.Action';
 
 const MyPosts = () => {
    const [mainLoader,setMainLoader]=useState(false);   
@@ -83,6 +84,35 @@ const MyPosts = () => {
            })
        }
     
+
+       const handleAddToDraft=async(postID)=>{
+        
+        let payload={
+          token:localStorage.getItem('token'),post_id:postID
+        }
+        DraftsAction.addToDraft(payload,(err,res)=>{
+ 
+          if(err)
+          {
+            toast(err);
+          }
+          else
+          {
+            if(res.status==200)
+            {
+               
+                  toast(res.msg);
+                  fetchPosts();
+
+            }
+            else
+            {
+              toast(res.msg);
+            }
+          }
+
+        })
+       }
     return (
 
         <>
@@ -211,7 +241,11 @@ const MyPosts = () => {
                <Link to={`/blog/${post?.id}`} ><button className='blog-edit-btn'>View</button></Link>
   <Link to={`/editpost/${post?.id}`} ><button className='blog-edit-btn'>Edit</button></Link>
 <button className='blog-edit-btn' onClick={()=>handleDelete(post?.id)}>Delete</button>
-  
+   
+                </div>
+                <div className='blog-special-insights'>
+                  
+<button className='blog-edit-btn' onClick={()=>handleAddToDraft(post?.id)}>Add to Drafts</button>
                 </div>
               </div>
               </div>

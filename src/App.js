@@ -22,6 +22,10 @@ import 'font-awesome/css/font-awesome.min.css';
 import TopPosts from './components/TopPosts';
 import RecommendedPosts from './components/RecommendedPosts';
 import OrderForm from './components/Payment';
+import UserLists from './components/UserLists';
+import GetListPost from './components/GetListPost';
+import SaveLater from './components/SaveLater';
+import Drafts from './components/Drafts';
 
 function App() {
   const {isLoggedIn,setIsLoggedIn,userProfileDetails,setUserProfileDetails}=useContext(AuthContext);
@@ -80,11 +84,16 @@ let payload={
          <Route exact path="/stripecheckout" key="Stripe"  element={<StripeCheckout/>} />
          <Route exact path="/editpost/:id" key="EditPost"  element={<EditPost/>} />
           
+         <Route exact path="/viewmylists" key="viewLists"  element={<UserLists/>} />
+         <Route exact path="/savelaters" key="savelaters"  element={<SaveLater/>} />
+
+         <Route exact path="/mylist/:id" key="viewLists"  element={<GetListPost/>} />
 
          <Route exact path='search/:id' key="searchResult" element={<SearchResults/>}/>
          <Route exact path='top-posts' key="top-posts" element={<TopPosts/>}/>
          <Route exact path='recommended-posts' key="recommended-posts" element={<RecommendedPosts/>}/>
          {/* <Route exact path='orderform' key="recommended-posts" element={<OrderForm/>}/> */}
+         <Route exact path='drafts' key="drafts" element={<Drafts/>}/>
           
          </Routes>
          </Router>
