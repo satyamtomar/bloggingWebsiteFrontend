@@ -21,6 +21,7 @@ import SearchResults from './components/SearchResults';
 import 'font-awesome/css/font-awesome.min.css';
 import TopPosts from './components/TopPosts';
 import RecommendedPosts from './components/RecommendedPosts';
+import OrderForm from './components/Payment';
 
 function App() {
   const {isLoggedIn,setIsLoggedIn,userProfileDetails,setUserProfileDetails}=useContext(AuthContext);
@@ -75,7 +76,7 @@ let payload={
          <Route exact path="/profile" key="profile"  element={<Profile/>} />
         
          <Route exact path="/writeblog" key="WriteBlog"  element={<WriteBlog/>} />
-         <Route exact path="/subscription" key="Subscription"  element={<Subscription/>} />
+         <Route exact path="/subscription" key="Subscription"  element={<OrderForm/>} />
          <Route exact path="/stripecheckout" key="Stripe"  element={<StripeCheckout/>} />
          <Route exact path="/editpost/:id" key="EditPost"  element={<EditPost/>} />
           
@@ -83,6 +84,7 @@ let payload={
          <Route exact path='search/:id' key="searchResult" element={<SearchResults/>}/>
          <Route exact path='top-posts' key="top-posts" element={<TopPosts/>}/>
          <Route exact path='recommended-posts' key="recommended-posts" element={<RecommendedPosts/>}/>
+         {/* <Route exact path='orderform' key="recommended-posts" element={<OrderForm/>}/> */}
           
          </Routes>
          </Router>

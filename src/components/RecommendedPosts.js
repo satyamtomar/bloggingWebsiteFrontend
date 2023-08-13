@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { TailSpin } from 'react-loader-spinner';
 import { ToastContainer, toast } from 'react-toastify';
 import BlogAction from '../actions/Blog.Action';
+import { Link } from 'react-router-dom';
 
 const RecommendedPosts = () => {
     const [mainLoader,setMainLoader]=useState(false);
@@ -150,6 +151,7 @@ asdfsak akfnkasn akfnaksdn akfnaksnf akgdsnkgsan agnaksnd aeansaks akfenaksenk a
   <span>{post.comments_count} Comments </span>
   {/* <span>20000 Views </span> */}
   {/* <button className='blog-edit-btn'>Edit</button>    */}
+  <Link to={`/blog/${post?.id}`} ><button className='blog-edit-btn'>View</button></Link>
   </div>
 </div>
 </div>

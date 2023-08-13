@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { TailSpin } from "react-loader-spinner";
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { AuthContext } from '../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import BlogAction from '../actions/Blog.Action';
 
 const Home = () => {
@@ -184,6 +184,7 @@ toast(err);
           <span>{post.comments_count} Comments </span>
           {/* <span>20000 Views </span> */}
           {/* <button className='blog-edit-btn'>Edit</button>    */}
+          <Link to={`/blog/${post?.id}`} ><button className='blog-edit-btn'>View</button></Link>
           </div>
         </div>
         </div>

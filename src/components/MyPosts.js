@@ -58,7 +58,31 @@ const MyPosts = () => {
   useEffect(() => {
     fetchPosts();
   }, []);
-
+  const handleDelete=async(post_id)=>{
+    let payload={
+       token:localStorage.getItem('token'),post_id:post_id
+    }
+           BlogAction.deletePost(payload,(err,res)=>{
+   
+               if(err)
+               {
+                   toast(err);
+               }
+               else
+               {
+                   if(res.status==200)
+                   {
+                  toast(res.msg);
+                  setTimeout(()=>{window.location.reload()},500)
+                   }
+                   else
+                   {
+   toast(res.msg);
+                   }
+               }
+           })
+       }
+    
     return (
 
         <>
@@ -183,7 +207,11 @@ const MyPosts = () => {
                 <span>{post.likes_count} Likes </span>
                 <span>{post.comments_count} Comments </span>
                 {/* <span>20000 Views </span> */}
-               <Link to={`/editpost/${post.id}`} ><button className='blog-edit-btn' >Edit</button></Link>   
+               {/* <Link to={`/editpost/${post.id}`} ><button className='blog-edit-btn' >Edit</button></Link>    */}
+               <Link to={`/blog/${post?.id}`} ><button className='blog-edit-btn'>View</button></Link>
+  <Link to={`/editpost/${post?.id}`} ><button className='blog-edit-btn'>Edit</button></Link>
+<button className='blog-edit-btn' onClick={()=>handleDelete(post?.id)}>Delete</button>
+  
                 </div>
               </div>
               </div>

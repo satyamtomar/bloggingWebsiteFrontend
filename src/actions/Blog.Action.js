@@ -93,7 +93,7 @@ const BACKEND_URL = '';
 
   function deletePost(payload ,cb) {
     Agent
-      .fire('delete', `http://localhost:3000/get-post`)
+      .fire('delete', `http://localhost:3000/delete-post`)
       .send(payload)
       .end((err, res) => {
         var error = err || res.error ? ServerError(res) : (res.body && res.body.error) ? ServerError(res) : null;
