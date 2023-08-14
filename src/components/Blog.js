@@ -209,7 +209,7 @@ const Blog = () => {
                     <p className='blog-page-desc-para'>
                         {blog?.content}
 
-                        {/* <br/>
+                        <br/>
                 Once upon a time, I met the person I’d been asking the universe for. We even met in the exact way I would have wanted to.
 
  I was on a solo rock-climbing road trip and through a series of fateful and unlikely events, we happened to be the only two people staying on a remote farm.
@@ -235,7 +235,7 @@ It seemed like the perfect fairy tale. And yet, it wasn’t.
 
 There wasn’t a single moment where I was emotionally secure but there were many moments where I felt deeply lonely.
 
-It was confusing. Wasn’t this exactly what I wanted? */}
+It was confusing. Wasn’t this exactly what I wanted?
                     </p>
                 </div>
             </div>

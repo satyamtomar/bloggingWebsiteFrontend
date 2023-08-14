@@ -26,6 +26,8 @@ import UserLists from './components/UserLists';
 import GetListPost from './components/GetListPost';
 import SaveLater from './components/SaveLater';
 import Drafts from './components/Drafts';
+import RevisionHistory from './components/RevisionHistory';
+import PostVersion from './components/PostVersion';
 
 function App() {
   const {isLoggedIn,setIsLoggedIn,userProfileDetails,setUserProfileDetails}=useContext(AuthContext);
@@ -94,7 +96,11 @@ let payload={
          <Route exact path='recommended-posts' key="recommended-posts" element={<RecommendedPosts/>}/>
          {/* <Route exact path='orderform' key="recommended-posts" element={<OrderForm/>}/> */}
          <Route exact path='drafts' key="drafts" element={<Drafts/>}/>
-          
+         <Route exact path='revisionhistory/:id' key="RevisionHistory" element={<RevisionHistory/>}/>
+
+
+         <Route exact path='postVersion/:postID/:version' key="RevisionHistory" element={<PostVersion/>}/>
+           
          </Routes>
          </Router>
          

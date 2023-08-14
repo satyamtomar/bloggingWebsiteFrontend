@@ -246,6 +246,7 @@ const MyPosts = () => {
                 <div className='blog-special-insights'>
                   
 <button className='blog-edit-btn' onClick={()=>handleAddToDraft(post?.id)}>Add to Drafts</button>
+<Link to={`/revisionhistory/${post?.id}`}><button className='blog-edit-btn'> Get Revision History</button></Link>
                 </div>
               </div>
               </div>
